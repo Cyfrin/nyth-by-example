@@ -1,5 +1,3 @@
-use std::error::Error;
-
 use aderyn_driver::context::browser::ExtractVariableDeclarations;
 use aderyn_driver::context::workspace_context::ASTNode;
 use aderyn_driver::context::workspace_context::WorkspaceContext;
