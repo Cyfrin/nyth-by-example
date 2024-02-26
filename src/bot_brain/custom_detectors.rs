@@ -1,4 +1,4 @@
-use crate::state_variable_is_never_set::detector::StateVariableIsNeverSetDetector;
+use crate::state_variable_is_never_used::detector::StateVariableIsNeverUsedDetector;
 // ADERYN-PILOT: 0x01 (Please feel free to fix above imports if they mess up)
 
 use std::{fs::OpenOptions, io::BufWriter, path::PathBuf};
@@ -22,7 +22,7 @@ use serde::Serialize;
 
 fn custom_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
-		Box::<StateVariableIsNeverSetDetector>::default(),
+        Box::<StateVariableIsNeverUsedDetector>::default(),
         // ADERYN-PILOT: 0x02 CUSTOM DETECTORS - Do not remove this comment even if the array is empty
     ]
 }

@@ -1,3 +1,25 @@
+// _   ___   _______ _   _  ________   __  _______   __  ___  ___  _________ _      _____
+// | \ | \ \ / /_   _| | | | | ___ \ \ / / |  ___\ \ / / / _ \ |  \/  || ___ \ |    |  ___|
+// |  \| |\ V /  | | | |_| | | |_/ /\ V /  | |__  \ V / / /_\ \| .  . || |_/ / |    | |__
+// | . ` | \ /   | | |  _  | | ___ \ \ /   |  __| /   \ |  _  || |\/| ||  __/| |    |  __|
+// | |\  | | |   | | | | | | | |_/ / | |   | |___/ /^\ \| | | || |  | || |   | |____| |___
+// \_| \_/ \_/   \_/ \_| |_/ \____/  \_/   \____/\/   \/\_| |_/\_|  |_/\_|   \_____/\____/
+// ______                     _     _       ______     _            _
+// | ___ \                   | |   | |      |  _  \   | |          | |
+// | |_/ /___ _   _ ___  __ _| |__ | | ___  | | | |___| |_ ___  ___| |_ ___  _ __
+// |    // _ \ | | / __|/ _` | '_ \| |/ _ \ | | | / _ \ __/ _ \/ __| __/ _ \| '__|
+// | |\ \  __/ |_| \__ \ (_| | |_) | |  __/ | |/ /  __/ ||  __/ (__| || (_) | |
+// \_| \_\___|\__,_|___/\__,_|_.__/|_|\___| |___/ \___|\__\___|\___|\__\___/|_|
+//
+// This ReusableDetector is responsible for finding state variables within ContractDefinition AST nodes.
+// The `detect` function does this following:
+//
+//   1. Accept ContractDefinition nodes via the `within` parameter.
+//   2. For each of those, extract every VariableDefinition node (this will retrieve every variable defined within the contract).
+//   3. For each VariableDefinition, If it is a state variable, add it to the `found_instances` vector.
+//   4. Return the `found_instances` vector.
+//
+
 use aderyn_driver::context::browser::ExtractVariableDeclarations;
 use aderyn_driver::context::workspace_context::ASTNode;
 use aderyn_driver::context::workspace_context::WorkspaceContext;

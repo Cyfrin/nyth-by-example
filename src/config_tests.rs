@@ -1,18 +1,17 @@
 #[allow(unused_imports)]
 use crate::bot_utils::{TestsConfig, TestsTarget};
 use crate::{
-    state_variable_is_never_set::detector::StateVariableIsNeverSetDetector,
+    state_variable_is_never_used::detector::StateVariableIsNeverUsedDetector,
     state_variables_in_contract_definition::detector::StateVariablesInContractDefinitionDetector,
 };
 
-// Look at the example below
-
 pub fn tests_configuration() -> TestsConfig {
     vec![
-        // Define your targets here. Example:
+        // This test configuration passes the Counter.sol contract to the
+        // StateVariablesInContractDefinitionDetector and the StateVariableIsNeverUsedDetector tests.
         TestsTarget::new("./foundry_workspace/out/Counter.sol/Counter.json")
             .with_reusable_detector(Box::<StateVariablesInContractDefinitionDetector>::default())
-            .with_issue_detector(Box::<StateVariableIsNeverSetDetector>::default()),
+            .with_issue_detector(Box::<StateVariableIsNeverUsedDetector>::default()),
     ]
     .into()
 }

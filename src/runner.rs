@@ -1,20 +1,15 @@
 use aderyn_driver::detector::IssueDetector;
 use aderyn_driver::driver::{drive_with, Args};
 
-// Core detectors
-// use aderyn_driver::detection_modules::low::PushZeroOpcodeDetector;
-
-use crate::state_variable_is_never_set::detector::StateVariableIsNeverSetDetector;
-
-// Custom detectors
+use crate::state_variable_is_never_used::detector::StateVariableIsNeverUsedDetector;
 
 // `cargo run` will run this function
 pub fn run() {
-    let subscriptions: Vec<Box<dyn IssueDetector>> = vec![
-        // List of detectors to run in producing report
-        // Box::<PushZeroOpcodeDetector>::default(),
-        Box::<StateVariableIsNeverSetDetector>::default(),
-    ];
+    // Subscribe the detectors to the driver.
+    // This will run the detectors and generate a report on `cargo run`.
+    // Only detectors that are subscribed here will be run.
+    let subscriptions: Vec<Box<dyn IssueDetector>> =
+        vec![Box::<StateVariableIsNeverUsedDetector>::default()];
 
     drive_with(
         Args {

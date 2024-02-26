@@ -1,3 +1,28 @@
+// _   ___   _______ _   _  ________   __  _______   __  ___  ___  _________ _      _____
+// | \ | \ \ / /_   _| | | | | ___ \ \ / / |  ___\ \ / / / _ \ |  \/  || ___ \ |    |  ___|
+// |  \| |\ V /  | | | |_| | | |_/ /\ V /  | |__  \ V / / /_\ \| .  . || |_/ / |    | |__
+// | . ` | \ /   | | |  _  | | ___ \ \ /   |  __| /   \ |  _  || |\/| ||  __/| |    |  __|
+// | |\  | | |   | | | | | | | |_/ / | |   | |___/ /^\ \| | | || |  | || |   | |____| |___
+// \_| \_/ \_/   \_/ \_| |_/ \____/  \_/   \____/\/   \/\_| |_/\_|  |_/\_|   \_____/\____/
+//
+//  _____                    ______     _            _
+// |_   _|                   |  _  \   | |          | |
+//   | | ___ ___ _   _  ___  | | | |___| |_ ___  ___| |_ ___  _ __
+//   | |/ __/ __| | | |/ _ \ | | | / _ \ __/ _ \/ __| __/ _ \| '__|
+//  _| |\__ \__ \ |_| |  __/ | |/ /  __/ ||  __/ (__| || (_) | |
+//  \___/___/___/\__,_|\___| |___/ \___|\__\___|\___|\__\___/|_|
+//
+// This IssueDetector is responsible for finding state variables that are never used within a contract.
+// The `detect` function does this following:
+//
+//   1. Accepts a WorkspaceContext as `context`.
+//   2. Retrieves all ContractDefinition nodes from the `context`.
+//   3. For each ContractDefinition, retrieves all state variables, by using the ReusableDetector: `StateVariablesInContractDefinitionDetector`.
+//   4. For each state variable, checks if it is referenced within the contract, by searching for Identifier nodes that reference the state variable ID.
+//   5. If no references are found, captures the state variable as an issue.
+//   6. Returns true if any issues are found, otherwise false.
+//
+
 use std::{collections::BTreeMap, error::Error};
 
 use aderyn_driver::context::workspace_context::{ASTNode, WorkspaceContext};
@@ -8,16 +33,13 @@ use aderyn_driver::detector::{IssueDetector, IssueSeverity, ReusableDetector};
 use crate::state_variables_in_contract_definition::detector::StateVariablesInContractDefinitionDetector;
 
 #[derive(Default)]
-pub struct StateVariableIsNeverSetDetector {
+pub struct StateVariableIsNeverUsedDetector {
     // Keys are source file name and line number
     found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl IssueDetector for StateVariableIsNeverSetDetector {
+impl IssueDetector for StateVariableIsNeverUsedDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        // Use the `context` to find nodes, then capture them as shown below
-        // capture!(self, context, ast_node);
-
         context
             .contract_definitions()
             .into_iter()
@@ -42,11 +64,13 @@ impl IssueDetector for StateVariableIsNeverSetDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Title for StateVariableIsNeverSetDetector")
+        // Choose an appropriate title for the report
+        String::from("State Variable is never used")
     }
 
     fn description(&self) -> String {
-        String::from("Description for StateVariableIsNeverSetDetector")
+        // Choose an appropriate description for the report
+        String::from("State variable is never used in the contract. This may be a mistake.")
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -68,7 +92,7 @@ mod state_variable_is_never_set_tests {
 
     use crate::config_tests::tests_configuration;
 
-    use super::StateVariableIsNeverSetDetector;
+    use super::StateVariableIsNeverUsedDetector;
 
     use aderyn_driver::context::workspace_context::WorkspaceContext;
     use aderyn_driver::detector::detector_test_helpers::load_contract;
@@ -87,11 +111,11 @@ mod state_variable_is_never_set_tests {
 
     #[test]
     fn test_state_variable_is_never_set() {
-        let detector = StateVariableIsNeverSetDetector::default();
+        let detector = StateVariableIsNeverUsedDetector::default();
         let contracts = tests_configuration().get_contracts_for(detector.name());
 
         for contract_file in contracts {
-            let detector = StateVariableIsNeverSetDetector::default();
+            let detector = StateVariableIsNeverUsedDetector::default();
             let context = load_contract(&contract_file);
             test_state_variable_is_never_set_for(contract_file, context, detector);
         }
