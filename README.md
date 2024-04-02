@@ -23,6 +23,20 @@ For those learning how to use Nyth, take a look into...
 
 # Running the project
 
+## Create a new Issue Detector
+
+```
+nyth new issue my_new_issue
+```
+
+## Create a new Reusable Detector
+
+```
+nyth new reusable my_new_reusable_thing
+```
+
+## Basic commands
+
 ```
 cargo build
 cargo test
