@@ -1,3 +1,4 @@
+use crate::public_state_variables::detector::PublicStateVariablesDetector;
 use crate::state_variable_is_never_used::detector::StateVariableIsNeverUsedDetector;
 // ADERYN-PILOT: 0x01 (Please feel free to fix above imports if they mess up)
 
@@ -23,6 +24,7 @@ use serde::Serialize;
 fn custom_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
         Box::<StateVariableIsNeverUsedDetector>::default(),
+		Box::<PublicStateVariablesDetector>::default(),
         // ADERYN-PILOT: 0x02 CUSTOM DETECTORS - Do not remove this comment even if the array is empty
     ]
 }
