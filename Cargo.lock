@@ -4,9 +4,9 @@ version = 3
 
 [[package]]
 name = "aderyn_core"
-version = "0.0.14"
+version = "0.0.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e404f724b71d2038103d66ce6770ddae4f461d4166f78b2bec81460a26f0ef11"
+checksum = "154daff74b4051faefc4027d7f15a195c914a048817900d036083db8b1fe4d20"
 dependencies = [
  "crossbeam",
  "crossbeam-channel",
@@ -23,9 +23,9 @@ dependencies = [
 
 [[package]]
 name = "aderyn_driver"
-version = "0.0.14"
+version = "0.0.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2df0c7452c4eda7d70ce0049f9a3d34d51b29b67985a2c510d47363f793dee86"
+checksum = "5a760cdb8e2df99b76a58c2b2bd3801e09479173b1b3d568fb18e8d8c711aa1c"
 dependencies = [
  "aderyn_core",
  "rayon",

@@ -52,6 +52,7 @@ pub fn generate_report_for_judge(root: &str, output: &str) {
             exclude: None,
             scope: None,
             no_snippets: false,
+            stdout: false,
         },
         custom_detectors(),
     )

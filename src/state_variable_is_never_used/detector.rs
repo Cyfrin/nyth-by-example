@@ -35,7 +35,7 @@ use crate::state_variables_in_contract_definition::detector::StateVariablesInCon
 #[derive(Default)]
 pub struct StateVariableIsNeverUsedDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), NodeID>,
+    found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
 impl IssueDetector for StateVariableIsNeverUsedDetector {
@@ -82,7 +82,7 @@ impl IssueDetector for StateVariableIsNeverUsedDetector {
         "state-variable-is-never-set".to_string()
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
+    fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
         self.found_instances.clone()
     }
 }
