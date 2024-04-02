@@ -15,7 +15,7 @@ For those learning how to use Nyth, take a look into...
 2. Your first Reusable Detector [`StateVariablesInContractDefinition`](./src/state_variables_in_contract_definition/detector.rs) - Returns all state variables within a given ContractDefinition.
 3. Your first Issue Detector [`StateVariableIsNeverUsed`](./src/state_variable_is_never_used/detector.rs).
 4. [`config_tests.rs`](./src/config_tests.rs) - Define which contracts from the Foundry Workspace to pass into your detector tests.
-5. `runner.rs` - Define which detectors should run when calling `cargo run`.
+5. [`runner.rs`](./src/runner.rs) - Define which detectors should run when calling `cargo run`.
 
 # Documentation
 
